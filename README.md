@@ -28,8 +28,6 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-### Prerequisites
-
 The gcc compiler and make must be installed. To install them, run the following commands:
 * deb-based systems:
 	```sh
