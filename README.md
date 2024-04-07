@@ -40,7 +40,7 @@ The gcc compiler and make must be installed. To install them, run the following 
 
 ### Installation
 
-*. Clone the repo
+* Clone the repo
 	```sh
 	git clone https://github.com/Eguelin/ft_printf.git
 	```
