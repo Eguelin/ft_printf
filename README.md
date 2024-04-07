@@ -15,16 +15,7 @@ This lib will be reusable for future projects.
 
 The prototype of ```ft_printf``` should be ```int ft_printf(const char *, ...);```
 
-It must manage the following conversions:
-*```%c```
-*```%s```
-*```%p```
-*```%d```
-*```%i```
-*```%u```
-*```%x```
-*```%X```
-*```%%```
+It must manage the following conversions: ```%c```  ```%s``` ```%p``` ```%d``` ```%i``` ```%u``` ```%x``` ```%X``` ```%%```
 
 ### Built With
 
