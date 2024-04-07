@@ -6,13 +6,13 @@
 /*   By: eguelin <eguelin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:38:59 by eguelin           #+#    #+#             */
-/*   Updated: 2023/02/14 17:26:54 by eguelin          ###   ########lyon.fr   */
+/*   Updated: 2024/04/07 17:01:12 by eguelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_print_all_2(char c, va_list arg);
+static int	ft_print_all_bis(char c, va_list arg);
 
 int	ft_print_all(char c, va_list arg)
 {
@@ -39,11 +39,11 @@ int	ft_print_all(char c, va_list arg)
 	else if (c == 'x')
 		size = ft_print_base(va_arg(arg, unsigned int), 16, "0123456789abcdef");
 	else
-		size = ft_print_all_2(c, arg);
+		size = ft_print_all_bis(c, arg);
 	return (size);
 }
 
-static int	ft_print_all_2(char c, va_list arg)
+static int	ft_print_all_bis(char c, va_list arg)
 {
 	int	size;
 

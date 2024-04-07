@@ -6,67 +6,90 @@
 #    By: eguelin <eguelin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/19 12:06:08 by eguelin           #+#    #+#              #
-#    Updated: 2023/02/14 18:57:39 by eguelin          ###   ########lyon.fr    #
+#    Updated: 2024/04/07 17:21:13 by eguelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#Standard
-OUT_DIR	= build/
+.PHONY: all clean fclean re
+# .SILENT:
+
+# **************************************************************************** #
+#                                   Variable                                   #
+# **************************************************************************** #
+
+NAME	= libftprintf.a
+OBJ_DIR	= build/
 SRC_DIR	= src/
 INC_DIR	= include/
-NAME	= libftprintf.a
-CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -I $(INC_DIR) -O2 -g -fsanitize=address
+CC		= gcc
+CFLAGS	= -Wall -Werror -Wextra
+INC		= -I $(INC_DIR)
 RM		= rm -rf
 ARC		= ar rcs
 
-#Colors
-BLACK	= \033[0;30m
-RED		= \033[0;31m
-GREEN	= \033[0;32m
-YELLOW	= \033[0;33m
-BLUE	= \033[0;34m
-PURPLE	= \033[0;35m
-CYAN	= \033[0;36m
-WHITE	= \033[0;37m
+# **************************************************************************** #
+#                                    Colors                                    #
+# **************************************************************************** #
 
-#Sentence
-COMP_MSG		= "$(GREEN)Compilation $(NAME) $(WHITE)done on $(YELLOW)$(shell date +'%Y-%m-%d %H:%M:%S')$(WHITE)"
-CLEAN_MSG		= "$(RED)Cleaning $(NAME) $(WHITE)done on $(YELLOW)$(shell date +'%Y-%m-%d %H:%M:%S')$(WHITE)"
-FULL_CLEAN_MSG	= "$(PURPLE)Full cleaning $(NAME) $(WHITE)done on $(YELLOW)$(shell date +'%Y-%m-%d %H:%M:%S')$(WHITE)"
+BLACK	= \033[30m
+RED		= \033[31m
+GREEN	= \033[32m
+YELLOW	= \033[33m
+BLUE	= \033[34m
+PURPLE	= \033[35m
+CYAN	= \033[36m
+WHITE	= \033[37m
+DEFAULT	= \033[0m
 
-#Sources
-FILES		= ft_printf ft_print_address ft_print_all ft_print_char ft_print_nbr ft_print_base ft_print_str
-INC_FILES	= ft_printf
+# **************************************************************************** #
+#                                    Message                                   #
+# **************************************************************************** #
 
-OBJS	= $(addprefix $(OUT_DIR), $(addsuffix .o, $(FILES)))
-HEADERS	= $(addprefix $(INC_DIR), $(addsuffix .h, $(INC_FILES)))
+COMP_MSG		= "$(GREEN)Compilation $(NAME) $(DEFAULT)done on $(YELLOW)$(shell date +'%Y-%m-%d %H:%M:%S')$(DEFAULT)"
+CLEAN_MSG		= "$(RED)Cleaning $(NAME) $(DEFAULT)done on $(YELLOW)$(shell date +'%Y-%m-%d %H:%M:%S')$(DEFAULT)"
+FULL_CLEAN_MSG	= "$(PURPLE)Full cleaning $(NAME) $(DEFAULT)done on $(YELLOW)$(shell date +'%Y-%m-%d %H:%M:%S')$(DEFAULT)"
 
-#Rules
+# **************************************************************************** #
+#                                    Sources                                   #
+# **************************************************************************** #
+FILES		= ft_print_address.c \
+			  ft_print_all.c \
+			  ft_print_char.c \
+			  ft_print_nbr.c \
+			  ft_print_base.c \
+			  ft_print_str.c \
+			  ft_printf.c
 
-.PHONY: all
+INC_FILES	= ft_printf.h
+
+OBJ			= $(addprefix $(OBJ_DIR), $(FILES:.c=.o))
+HEADERS		= $(addprefix $(INC_DIR), $(INC_FILES))
+
+ALL_OBJ_DIR	= $(sort $(dir $(OBJ)))
+
+# **************************************************************************** #
+#                                     Rules                                    #
+# **************************************************************************** #
+
 all: $(NAME)
 
-$(NAME): $(OUT_DIR) $(OBJS)
-	@norminette | awk '$$NF!="OK!" {print "\033[0;31m" $$0 "\033[0m"}'
-	@$(ARC) $(NAME) $(OBJS)
+$(NAME): $(OBJ)
+	@norminette | awk '$$NF!="OK!" {print "$(RED)" $$0 "$(DEFAULT)"}'
+	$(ARC) $(NAME) $(OBJ)
 	@echo $(COMP_MSG)
 
-$(OUT_DIR)%.o : $(SRC_DIR)%.c $(HEADERS) Makefile
-	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADERS) | $(ALL_OBJ_DIR)
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-.PHONY: clean
 clean:
-	@$(RM) $(OUT_DIR)
+	$(RM) $(OBJ_DIR)
 	@echo $(CLEAN_MSG)
 
-.PHONY: fclean
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 	@echo $(FULL_CLEAN_MSG)
 
-.PHONY: re
 re: fclean all
 
-$(OUT_DIR):
-	@mkdir -p $(OUT_DIR)
+$(ALL_OBJ_DIR):
+	mkdir -p $@

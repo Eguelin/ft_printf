@@ -1,7 +1,7 @@
-a.out*
-.DS_Store
-*.gch
-*.o
-*.a
-build
-
+*
+!*/
+!*.c
+!*.h
+!.gitignore
+!Makefile
+!README.md
