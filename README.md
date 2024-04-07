@@ -56,7 +56,7 @@ The gcc compiler and make must be installed. To install them, run the following 
 
 2. Use the library in your project
 	```c
-	#include "libft.h"
+	#include "ft_printf.h"
 	```
 
 3. Compile your project with the library
@@ -73,7 +73,7 @@ The gcc compiler and make must be installed. To install them, run the following 
 ## Usage
 
 ```c
-#include "libft.h"
+#include "ft_printf.h"
 
 int main()
 {
